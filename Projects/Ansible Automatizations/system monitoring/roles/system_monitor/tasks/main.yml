@@ -1,0 +1,15 @@
+---
+- name: Check disk usage
+  include_tasks: disk.yml
+
+- name: Check memory usage
+  include_tasks: memory.yml
+
+- name: Check CPU load
+  include_tasks: cpu.yml
+
+- name: Check process count
+  include_tasks: processes.yml
+
+- name: Send alert summary if needed
+  include_tasks: alert.yml

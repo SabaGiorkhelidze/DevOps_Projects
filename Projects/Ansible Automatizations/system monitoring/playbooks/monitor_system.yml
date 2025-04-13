@@ -1,3 +1,4 @@
+---
 - name: Monitor system resources. if critical, send alert
   hosts: all
   become: true

@@ -1,0 +1,19 @@
+---
+- name: Initialize disk alerts list
+  set_fact:
+    disk_alerts: []
+
+- name: Check disk usage for each mount
+  shell: "df -h {{ item }} --output=pcent | tail -1 | tr -dc '0-9'"
+  loop: "{{ disk_mounts }}"
+  register: mount_usage
+  changed_when: false
+  failed_when: mount_usage.rc != 0
+
+- name: Append disk alert if threshold exceeded
+  set_fact:
+    disk_alerts: "{{ disk_alerts + [item.item ~ ': ' ~ item.stdout ~ '%'] }}"
+  when: (item.stdout | int) >= disk_threshold
+  loop: "{{ mount_usage.results }}"
+  loop_control:
+    label: "{{ item.item }}"
