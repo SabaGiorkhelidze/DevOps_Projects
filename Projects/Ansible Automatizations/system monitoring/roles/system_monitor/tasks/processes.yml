@@ -1,0 +1,14 @@
+---
+- name: Count running processes
+  shell: ps aux | wc -l
+  register: process_count
+  changed_when: false
+  failed_when: process_count.rc != 0
+
+- set_fact:
+    current_processes: "{{ process_count.rc | int }}"
+
+- name: process count alerting
+  set_fact:
+    process_count_alert: true
+  when: current_processes | int >= process_threshold
