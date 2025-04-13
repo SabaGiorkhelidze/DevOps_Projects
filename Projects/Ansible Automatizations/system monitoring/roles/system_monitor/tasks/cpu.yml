@@ -1,0 +1,14 @@
+---
+- name: 1-minute CPU load
+  shell: uptime | awk -F'load average:' '{ print $2 }' | cut -d',' -f1 | xargs
+  register: cpu_load
+  changed_when: false
+  failed_when: cpu_load.rc != 0
+
+- set_fact:
+    current_cpu_load: "{{ cpu_load.stdout | float }}"
+
+- name: set cpu alert
+  set_fact:
+    cpu_alert: true
+  when: current_cpu_load | float >= cpu_load_threshold
