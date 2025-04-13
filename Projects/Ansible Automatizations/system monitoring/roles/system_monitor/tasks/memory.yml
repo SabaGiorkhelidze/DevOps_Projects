@@ -1,0 +1,14 @@
+---
+- name: Get memory usage
+  shell: free | grep Mem | awk '{print int($3/$2 * 100)}'
+  register: mem_usage
+  changed_when: false
+  failed_when: mem_usage.rc != 0
+
+- set_fact:
+    current_memory_usage: "{{ mem_usage.stdout | int }}"
+
+- name: set memory alert
+  set_fact:
+    memory_alert: true
+  when: current_memory_usage | int >= memory_threshold
