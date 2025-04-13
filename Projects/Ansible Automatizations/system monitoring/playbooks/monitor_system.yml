@@ -1,0 +1,5 @@
+- name: Monitor system resources. if critical, send alert
+  hosts: all
+  become: true
+  roles:
+    - system_monitor

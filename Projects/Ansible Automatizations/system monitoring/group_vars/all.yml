@@ -1,0 +1,9 @@
+disk_threshold: 85
+memory_threshold: 90
+cpu_load_threshold: 2.0
+process_threshold: 300
+alert_email: "sabasgg123@gmail.com"
+disk_mounts:
+  - /
+  - /home
+  - /var

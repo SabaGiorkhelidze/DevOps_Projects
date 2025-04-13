@@ -1,0 +1,9 @@
+---
+- hosts: webserver
+  become: yes
+  roles:
+    - role: common
+    - role: python
+    - role: docker
+    - role: prometheus
+    - role: grafana
