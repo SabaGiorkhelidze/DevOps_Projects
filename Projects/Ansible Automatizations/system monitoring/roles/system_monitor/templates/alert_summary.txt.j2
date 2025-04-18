@@ -1,0 +1,16 @@
+Alert Summary for {{ inventory_hostname }}:
+
+{% if disk_alert %}
+- Disk usage is high: {{ current_disk_usage }}% (Threshold: {{ disk_threshold }}%)
+{% endif %}
+{% if memory_alert %}
+- Memory usage is high: {{ current_memory_usage }}% (Threshold: {{ memory_threshold }}%)
+{% endif %}
+{% if cpu_alert %}
+- CPU load is high: {{ current_cpu_load }} (Threshold: {{ cpu_load_threshold }})
+{% endif %}
+{% if process_alert %}
+- Process count is high: {{ current_process_count }} (Threshold: {{ process_threshold }})
+{% endif %}
+
+Please investigate the issues on this host.

@@ -1,0 +1,16 @@
+---
+- name: Check if any alert is active
+  set_fact:
+    alert_needed: true
+  when:
+    - disk_alert | default(false)
+    - memory_alert | default(false)
+    - cpu_alert | default(false)
+    - process_alert | default(false)
+- name: send alert to email(in the future, telegram)
+  mail:
+    to: "{{ alert_email }}"
+    subject: "🚨 System Resource Alert on {{ inventory_hostname }}"
+    body: "{{ lookup('template', 'alert_summary.txt.j2') }}"
+  delegate_to: localhost
+  when: alert_needed | default(false)
